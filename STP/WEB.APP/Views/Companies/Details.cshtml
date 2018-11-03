@@ -1,0 +1,73 @@
+﻿@model WEB.APP.Models.Company
+
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Company</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Employees)
+        </dt>
+        @if (Model.Employees.Count > 0)
+        {
+            <dd>
+                <table class="table">
+                   @foreach (var item in Model.Employees)
+                     {
+                    <tr>
+                        <th>@Html.DisplayNameFor(modelItem => item.FullName)</th>
+                        <th>@Html.DisplayNameFor(modelItem => item.Experiance)</th>
+                        <th>@Html.DisplayNameFor(modelItem => item.StartDate)</th>
+                        <th>@Html.DisplayNameFor(modelItem => item.VacationDays)</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                        break;
+                     }
+                   @foreach (var item in Model.Employees)
+                     {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FullName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Experiance)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StartDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.VacationDays)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", "Employee", new { id = item.Id }, null) |
+                                @Html.ActionLink("Details", "Details", "Employee", new { id = item.Id }, null) |
+                                @Html.ActionLink("Delete", "Delete", "Employee", new { id = item.Id }, null)
+                            </td>
+                        </tr>
+                     }
+                </table>
+            </dd>
+        }
+        </dl>
+</div>
+<p>
+    @Html.ActionLink("Add New Employee", "Create", "Employees", null, null) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
