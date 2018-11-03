@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-namespace WEB.APP.Controllers
+﻿namespace WEB.APP.Controllers
 {
     using System.Data;
     using System.Data.Entity;
@@ -13,6 +11,13 @@ namespace WEB.APP.Controllers
     public class CompaniesController : Controller
     {
         private StpDbContext db = new StpDbContext();
+
+        public CompaniesController() : this (new StpDbContext()) { }
+
+        public CompaniesController(StpDbContext db) : base()
+        {
+            this.db = db;
+        }
 
         // GET: Companies
         public ActionResult Index()
@@ -27,13 +32,15 @@ namespace WEB.APP.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Company company = db.Companies.Find(id);
 
+            Company company = db.Companies.Find(id);
             company.Employees = this.db.Employees.Where(e => (e.CompanyId == company.Id)).ToList();
+
             if (company == null)
             {
                 return HttpNotFound();
             }
+
             return View(company);
         }
 
@@ -67,11 +74,13 @@ namespace WEB.APP.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Company company = db.Companies.Find(id);
             if (company == null)
             {
                 return HttpNotFound();
             }
+
             return View(company);
         }
 
@@ -86,8 +95,10 @@ namespace WEB.APP.Controllers
             {
                 db.Entry(company).State = EntityState.Modified;
                 db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
+
             return View(company);
         }
 
@@ -98,11 +109,14 @@ namespace WEB.APP.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Company company = db.Companies.Find(id);
+
             if (company == null)
             {
                 return HttpNotFound();
             }
+
             return View(company);
         }
 
@@ -112,8 +126,10 @@ namespace WEB.APP.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Company company = db.Companies.Find(id);
+
             db.Companies.Remove(company);
             db.SaveChanges();
+
             return RedirectToAction("Index");
         }
 

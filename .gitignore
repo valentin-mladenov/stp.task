@@ -1,4 +1,5 @@
 
 STP/WEB.APP/bin/*
 STP/WEB.APP/obj/*
-
+STP/WEB.APP.Tests/bin/*
+STP/WEB.APP.Tests/obj/*

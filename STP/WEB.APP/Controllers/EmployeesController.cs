@@ -10,6 +10,15 @@
     {
         private StpDbContext db = new StpDbContext();
 
+        public EmployeesController() : this(new StpDbContext())
+        {
+
+        }
+
+        public EmployeesController(StpDbContext db) : base()
+        {
+            this.db = db;
+        }
         // GET: Employees
         public ActionResult Index()
         {

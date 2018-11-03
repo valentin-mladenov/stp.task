@@ -1,81 +1,119 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Web.Http;
+//using NUnit.Framework;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using WEB.APP;
+
 using WEB.APP.Controllers;
+using System.Web.Mvc;
+using WEB.APP.Models;
+using System.Collections.Generic;
 
 namespace WEB.APP.Tests.Controllers
 {
     [TestClass]
-    public class CompaniesControllerTest
+    public class CompaniesControllerTest : BaseTest
     {
+
         [TestMethod]
-        public void Get()
+        public void Index()
         {
             // Arrange
-            CompaniesController controller = new CompaniesController();
-
+            var controller = new CompaniesController(this.MockContext.Object);
+            
             // Act
-            IEnumerable<string> result = controller.Get();
+            var result = controller.Index() as ViewResult;
+
+            var mockedModels = result.Model as List<Company>;
 
             // Assert
             Assert.IsNotNull(result);
-            Assert.AreEqual(2, result.Count());
-            Assert.AreEqual("value1", result.ElementAt(0));
-            Assert.AreEqual("value2", result.ElementAt(1));
+            Assert.AreEqual(3, mockedModels.Count);
+            Assert.AreEqual("STP", mockedModels[0].Name);
+            Assert.AreEqual("Philips", mockedModels[1].Name);
+            Assert.AreEqual("ACME", mockedModels[2].Name);
         }
 
         [TestMethod]
-        public void GetById()
+        public void Details()
         {
             // Arrange
-            ValuesController controller = new ValuesController();
+            var controller = new CompaniesController(this.MockContext.Object);
 
             // Act
-            string result = controller.Get(5);
+            var result = controller.Details(3) as ViewResult;
+
+            var mockedModel = result.Model as Company;
 
             // Assert
-            Assert.AreEqual("value", result);
+            Assert.IsNotNull(result);
+            Assert.AreEqual("ACME", mockedModel.Name);
         }
 
         [TestMethod]
-        public void Post()
+        public void Create()
         {
             // Arrange
-            ValuesController controller = new ValuesController();
+            var controller = new CompaniesController(this.MockContext.Object);
 
             // Act
-            controller.Post("value");
+            controller.Create();
+            
+            var company = new Company() { Id=4, Name = "Osram"};
+            controller.Create(company);
+            var result = controller.Index() as ViewResult;
+            var mockedModels = result.Model as List<Company>;
 
             // Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(4, mockedModels.Count);
+            Assert.AreEqual("Osram", mockedModels[3].Name);
         }
 
         [TestMethod]
-        public void Put()
+        public void Edit()
         {
             // Arrange
-            ValuesController controller = new ValuesController();
+            var controller = new CompaniesController(this.MockContext.Object);
 
             // Act
-            controller.Put(5, "value");
+            var CompanyFindEdit = controller.Edit(2) as ViewResult;
+
+            var mockedFindEditModel = CompanyFindEdit.Model as Company;
+
+            mockedFindEditModel.Name = "Philips-Changed";
+
+            controller.Edit(mockedFindEditModel);
+
+            var result = controller.Index() as ViewResult;
+            
+            var mockedModels = result.Model as List<Company>;
 
             // Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(3, mockedModels.Count);
+            Assert.AreEqual("STP", mockedModels[0].Name);
+            Assert.AreEqual("Philips-Changed", mockedModels[1].Name);
+            Assert.AreEqual("ACME", mockedModels[2].Name);
         }
 
         [TestMethod]
         public void Delete()
         {
             // Arrange
-            ValuesController controller = new ValuesController();
+            var controller = new CompaniesController(this.MockContext.Object);
 
             // Act
-            controller.Delete(5);
+            controller.Delete(2);
+            controller.DeleteConfirmed(2);
+
+            var result = controller.Index() as ViewResult;
+
+            var mockedModels = result.Model as List<Company>;
 
             // Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(2, mockedModels.Count);
+            Assert.AreEqual("STP", mockedModels[0].Name);
+            Assert.AreEqual("ACME", mockedModels[1].Name);
         }
     }
 }

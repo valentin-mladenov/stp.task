@@ -9,7 +9,7 @@
 
         }
 
-        public DbSet<Company> Companies { get; set; }
-        public DbSet<Employee> Employees { get; set; }
+        public virtual IDbSet<Company> Companies { get; set; }
+        public virtual IDbSet<Employee> Employees { get; set; }
     }
 }
