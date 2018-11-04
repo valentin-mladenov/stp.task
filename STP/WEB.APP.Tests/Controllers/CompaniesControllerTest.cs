@@ -1,30 +1,23 @@
-﻿using System;
-//using NUnit.Framework;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-using WEB.APP.Controllers;
-using System.Web.Mvc;
-using WEB.APP.Models;
-using System.Collections.Generic;
-
-namespace WEB.APP.Tests.Controllers
+﻿namespace WEB.APP.Tests.Controllers
 {
+    using System.Collections.Generic;
+    using System.Web.Mvc;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using WEB.APP.Controllers;
+    using WEB.APP.Models;
+
     [TestClass]
     public class CompaniesControllerTest : BaseTest
     {
-
         [TestMethod]
         public void Index()
         {
-            // Arrange
             var controller = new CompaniesController(this.MockContext.Object);
             
-            // Act
             var result = controller.Index() as ViewResult;
 
             var mockedModels = result.Model as List<Company>;
 
-            // Assert
             Assert.IsNotNull(result);
             Assert.AreEqual(3, mockedModels.Count);
             Assert.AreEqual("STP", mockedModels[0].Name);
@@ -35,15 +28,12 @@ namespace WEB.APP.Tests.Controllers
         [TestMethod]
         public void Details()
         {
-            // Arrange
             var controller = new CompaniesController(this.MockContext.Object);
 
-            // Act
             var result = controller.Details(3) as ViewResult;
 
             var mockedModel = result.Model as Company;
 
-            // Assert
             Assert.IsNotNull(result);
             Assert.AreEqual("ACME", mockedModel.Name);
         }
@@ -51,18 +41,17 @@ namespace WEB.APP.Tests.Controllers
         [TestMethod]
         public void Create()
         {
-            // Arrange
             var controller = new CompaniesController(this.MockContext.Object);
 
-            // Act
             controller.Create();
             
             var company = new Company() { Id=4, Name = "Osram"};
+
             controller.Create(company);
+
             var result = controller.Index() as ViewResult;
             var mockedModels = result.Model as List<Company>;
 
-            // Assert
             Assert.IsNotNull(result);
             Assert.AreEqual(4, mockedModels.Count);
             Assert.AreEqual("Osram", mockedModels[3].Name);
@@ -71,13 +60,9 @@ namespace WEB.APP.Tests.Controllers
         [TestMethod]
         public void Edit()
         {
-            // Arrange
             var controller = new CompaniesController(this.MockContext.Object);
-
-            // Act
-            var CompanyFindEdit = controller.Edit(2) as ViewResult;
-
-            var mockedFindEditModel = CompanyFindEdit.Model as Company;
+            
+            var mockedFindEditModel = (controller.Edit(2) as ViewResult).Model as Company;
 
             mockedFindEditModel.Name = "Philips-Changed";
 
@@ -87,7 +72,6 @@ namespace WEB.APP.Tests.Controllers
             
             var mockedModels = result.Model as List<Company>;
 
-            // Assert
             Assert.IsNotNull(result);
             Assert.AreEqual(3, mockedModels.Count);
             Assert.AreEqual("STP", mockedModels[0].Name);

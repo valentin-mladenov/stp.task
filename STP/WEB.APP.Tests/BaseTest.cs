@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using Moq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using WEB.APP.Models;
-
-namespace WEB.APP.Tests
+﻿namespace WEB.APP.Tests
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data.Entity;
+    using System.Linq;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Moq;
+    using WEB.APP.Models;
+
     public class BaseTest
     {
         protected Mock<StpDbContext> MockContext;
@@ -29,14 +29,14 @@ namespace WEB.APP.Tests
 
             var employees = new List<Employee>
             {
-                new Employee{CompanyId=companies[0].Id, FullName="Worker 1", Salary=1000.5m, Company=companies[0], StartDate=DateTime.Now, VacationDays=15.5m, Experiance=ExperianceLevel.A},
-                new Employee{CompanyId=companies[0].Id, FullName="Worker 2", Salary=2000.5m, Company=companies[0], StartDate=DateTime.Now, VacationDays=15.5m, Experiance=ExperianceLevel.C},
-                new Employee{CompanyId=companies[0].Id, FullName="Worker 3", Salary=2300.5m, Company=companies[0], StartDate=DateTime.Now, VacationDays=15.5m, Experiance=ExperianceLevel.B},
-                new Employee{CompanyId=companies[1].Id, FullName="Worker 4", Salary=5000.5m, Company=companies[1], StartDate=DateTime.Now, VacationDays=15.5m, Experiance=ExperianceLevel.B},
-                new Employee{CompanyId=companies[1].Id, FullName="Worker 5", Salary=7000.0m, Company=companies[1], StartDate=DateTime.Now, VacationDays=15.5m, Experiance=ExperianceLevel.D},
-                new Employee{CompanyId=companies[1].Id, FullName="Worker 6", Salary=7000.0m, Company=companies[1], StartDate=DateTime.Now, VacationDays=15.5m, Experiance=ExperianceLevel.D},
-                new Employee{CompanyId=companies[2].Id, FullName="Worker 7", Salary=1500.5m, Company=companies[2], StartDate=DateTime.Now, VacationDays=15.5m, Experiance=ExperianceLevel.A},
-                new Employee{CompanyId=companies[2].Id, FullName="Worker 8", Salary=2500.5m, Company=companies[2], StartDate=DateTime.Now, VacationDays=15.5m, Experiance=ExperianceLevel.B},
+                new Employee{Id=1, CompanyId=companies[0].Id, FullName="Worker 1", Salary=1000.5m, Company=companies[0], StartDate=DateTime.Now, VacationDays=15.5m, Experiance=ExperianceLevel.A},
+                new Employee{Id=2, CompanyId=companies[0].Id, FullName="Worker 2", Salary=2000.5m, Company=companies[0], StartDate=DateTime.Now, VacationDays=12.5m, Experiance=ExperianceLevel.C},
+                new Employee{Id=3, CompanyId=companies[0].Id, FullName="Worker 3", Salary=2300.5m, Company=companies[0], StartDate=DateTime.Now, VacationDays=15.5m, Experiance=ExperianceLevel.B},
+                new Employee{Id=4, CompanyId=companies[1].Id, FullName="Worker 4", Salary=5000.5m, Company=companies[1], StartDate=DateTime.Now, VacationDays=25.5m, Experiance=ExperianceLevel.B},
+                new Employee{Id=5, CompanyId=companies[1].Id, FullName="Worker 5", Salary=7000.0m, Company=companies[1], StartDate=DateTime.Now, VacationDays=15.5m, Experiance=ExperianceLevel.D},
+                new Employee{Id=6, CompanyId=companies[1].Id, FullName="Worker 6", Salary=7000.0m, Company=companies[1], StartDate=DateTime.Now, VacationDays=15.5m, Experiance=ExperianceLevel.D},
+                new Employee{Id=7, CompanyId=companies[2].Id, FullName="Worker 7", Salary=1500.5m, Company=companies[2], StartDate=DateTime.Now, VacationDays=15.5m, Experiance=ExperianceLevel.A},
+                new Employee{Id=8, CompanyId=companies[2].Id, FullName="Worker 8", Salary=2500.5m, Company=companies[2], StartDate=DateTime.Now, VacationDays=15.0m, Experiance=ExperianceLevel.B},
             };
             var employeeQueryable = employees.AsQueryable();
 
