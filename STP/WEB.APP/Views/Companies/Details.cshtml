@@ -29,6 +29,7 @@
                    @foreach (var item in Model.Employees)
                      {
                     <tr>
+                        <th>@Html.DisplayNameFor(modelItem => item.Id)</th>
                         <th>@Html.DisplayNameFor(modelItem => item.FullName)</th>
                         <th>@Html.DisplayNameFor(modelItem => item.Experiance)</th>
                         <th>@Html.DisplayNameFor(modelItem => item.StartDate)</th>
@@ -43,6 +44,9 @@
                      {
                         <tr>
                             <td>
+                                @Html.DisplayFor(modelItem => item.Id)
+                            </td>
+                            <td>
                                 @Html.DisplayFor(modelItem => item.FullName)
                             </td>
                             <td>
@@ -55,9 +59,9 @@
                                 @Html.DisplayFor(modelItem => item.VacationDays)
                             </td>
                             <td>
-                                @Html.ActionLink("Edit", "Edit", "Employee", new { id = item.Id }, null) |
-                                @Html.ActionLink("Details", "Details", "Employee", new { id = item.Id }, null) |
-                                @Html.ActionLink("Delete", "Delete", "Employee", new { id = item.Id }, null)
+                                @Html.ActionLink("Edit", "Edit", "Employees", new { id = item.Id }, new { @class = "btn btn-outline-primary" }) |
+                                @Html.ActionLink("Details", "Details", "Employees", new { id = item.Id }, new { @class = "btn btn-outline-success" }) |
+                                @Html.ActionLink("Delete", "Delete", "Employees", new { id = item.Id }, new { @class = "btn btn-outline-danger" })
                             </td>
                         </tr>
                      }
@@ -67,7 +71,7 @@
         </dl>
 </div>
 <p>
-    @Html.ActionLink("Add New Employee", "Create", "Employees", null, null) |
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Add New Employee", "Create", "Employees", null, new { @class = "btn btn-outline-info" }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-outline-primary" }) |
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-outline-secondary" })
 </p>
