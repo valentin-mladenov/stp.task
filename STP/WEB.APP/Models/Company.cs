@@ -5,12 +5,17 @@
 
     public class Company
     {
+        public Company()
+        {
+            this.Employees = new HashSet<Employee>();
+        }
+
         [Key]
         public int Id { get; set; }
 
         [MaxLength(50)]
         public string Name { get; set; }
 
-        public ICollection<Employee> Employees { get; set; }
+        public virtual ICollection<Employee> Employees { get; set; }
     }
 }
